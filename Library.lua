@@ -1739,6 +1739,8 @@ function GuiLibrary.TabClass:CreateButton(prop)
 	
 	obj.Part.Label.Size = UDim2.fromScale(0.9, 1)
 	
+	obj.Part:SetAttribute("disabled", prop.IsDisabled)
+	
 	local btn = Instance.new("TextLabel")
 	btn.Name = "btn"
 	btn.Parent = obj.Part
@@ -1883,6 +1885,8 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	Element_Template(self, idx, obj, index, prop)
 	obj.Class = 'Slider'
 	obj.Values = {}
+	
+	obj.Part:SetAttribute("disabled", prop.IsDisabled)
 	
 	obj.Values.Min = prop.Values.MinValue or 0
 	obj.Values.Max = prop.Values.MaxValue or 0
@@ -2114,7 +2118,7 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 		end)
 	end)()
 	
-	obj.ValueChanger.Value = prop.Values.CurrentValue or 0
+	obj.ValueChanger.Part.Value = prop.Values.CurrentValue or 0
 	
 	return obj
 end
@@ -2217,6 +2221,8 @@ function GuiLibrary.TabClass:CreateInput(prop)
 
 	local index = #self[idx].Frame.Part:GetChildren() - 2
 	Element_Template(self, idx, obj, index, prop)
+	
+	obj.Part:SetAttribute("disabled", prop.IsDisabled)
 	
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj.Part
