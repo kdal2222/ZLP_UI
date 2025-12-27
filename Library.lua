@@ -339,7 +339,7 @@ function GuiLibrary:KeySystem(prop)
 	CloseUI.TextSize = 14.000
 	CloseUI.TextWrapped = true
 
-	UIAspectRatioConstraint.Parent = CloseUI
+	UIAspectRatioConstraint42.Parent = CloseUI
 
 	local function UQYFOHY_fake_script() 
 		local script = Instance.new('LocalScript', CloseUI)
