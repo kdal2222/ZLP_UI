@@ -1886,8 +1886,6 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	obj.Class = 'Slider'
 	obj.Values = {}
 	
-	obj.Part:SetAttribute("disabled", prop.IsDisabled)
-	
 	obj.Values.Min = prop.Values.MinValue or 0
 	obj.Values.Max = prop.Values.MaxValue or 0
 	obj.Values.SliderStep = prop.Values.SliderStep or 0.01
@@ -2119,6 +2117,7 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	end)()
 	
 	obj.ValueChanger.Part.Value = prop.Values.CurrentValue or 0
+	obj.Part:SetAttribute("disabled", prop.IsDisabled)
 	
 	return obj
 end
@@ -2222,8 +2221,6 @@ function GuiLibrary.TabClass:CreateInput(prop)
 	local index = #self[idx].Frame.Part:GetChildren() - 2
 	Element_Template(self, idx, obj, index, prop)
 	
-	obj.Part:SetAttribute("disabled", prop.IsDisabled)
-	
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj.Part
 	
@@ -2301,6 +2298,8 @@ function GuiLibrary.TabClass:CreateInput(prop)
 			obj.OnDisabledChanged:Fire(obj.Part:GetAttribute("disabled"))
 		end)
 	end)()
+	
+	obj.Part:SetAttribute("disabled", prop.IsDisabled)
 	
 	return obj
 end
