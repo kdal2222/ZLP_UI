@@ -248,12 +248,8 @@ function GuiLibrary:KeySystem(prop)
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
 
 	obj.ScreenGUI = Instance.new("ScreenGui")
-	local s, r = pcall(function()
-		obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
-	end)
-	if not s then
-		print('LOL XD')
-	end
+	obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
+	print('yo?')
 	obj.ScreenGUI.Parent = game:GetService("CoreGui")
 	--obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	obj.ScreenGUI.IgnoreGuiInset = true
