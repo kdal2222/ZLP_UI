@@ -171,6 +171,17 @@ function GuiLibrary:KeySystem(prop)
 	obj.KeySignal = Signal.new()
 	obj.Verify = Signal.new()
 	obj.Get = Signal.new()
+	obj.Auto = Signal.new()
+	
+	makefolder('ZLP_KEYSYSTEM')
+	if not prop.Name then return error('Name required!') end
+	local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
+	
+	if not isfile(filename) then
+		writefile(filename, '')
+	end
+	
+	obj.Auto.Fire(readfile(filename))
 	
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -706,6 +717,7 @@ function GuiLibrary:KeySystem(prop)
 		script.Parent.Input.TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 			script.Parent:SetAttribute('value', script.Parent.Input.TextBox.Text)
 			obj.KeySignal:Fire(script.Parent.Input.TextBox.Text)
+			writefile(filename, script.Parent.Input.TextBox.Text)
 		end)
 	end
 	coroutine.wrap(GSSLKZC_fake_script)()
