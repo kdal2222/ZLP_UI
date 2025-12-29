@@ -171,21 +171,21 @@ function GuiLibrary:KeySystem(prop)
 	obj.KeySignal = Signal.new()
 	obj.Verify = Signal.new()
 	obj.Get = Signal.new()
-	obj.Auto = Signal.new()
+	--obj.Auto = Signal.new()
 	
-	makefolder('ZLP_KEYSYSTEM')
-	if not prop.Name then return error('Name required!') end
+	--makefolder('ZLP_KEYSYSTEM')
+	--if not prop.Name then return error('Name required!') end
 	
-	local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
+	--local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
 	
-	if not isfile(filename) then
-		writefile(filename, '')
-	end
+	--if not isfile(filename) then
+	--	writefile(filename, '')
+	--end
 	
-	task.spawn(function()
-		task.wait(1)
-		obj.Auto:Fire(readfile(filename))
-	end)
+	--task.spawn(function()
+	--	task.wait(1)
+	--	obj.Auto:Fire(readfile(filename))
+	--end)
 	
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -248,7 +248,6 @@ function GuiLibrary:KeySystem(prop)
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
 
 	obj.ScreenGUI = Instance.new("ScreenGui")
-	print(obj.ScreenGUI.Name, obj.ScreenGUI:IsA('ScreenGui'))
 	obj.ScreenGUI.Parent = game:GetService("CoreGui")
 	obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
 	--obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
