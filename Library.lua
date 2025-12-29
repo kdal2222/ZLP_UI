@@ -181,7 +181,7 @@ function GuiLibrary:KeySystem(prop)
 		writefile(filename, '')
 	end
 	
-	obj.Auto.Fire(readfile(filename))
+	obj.Auto:Fire(readfile(filename))
 	
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
