@@ -58,12 +58,12 @@ end
 local function bubbleSort(t)
 	local n = 0
 	local list = {}
-	
+
 	for i, v in pairs(t) do
 		table.insert(list, {['index'] = v, ['part'] = i})
 		n += 1
 	end
-	
+
 	for i = 1, n - 1 do
 		for j = 1, n - i do
 			if list[j]['index'] > list[j + 1]['index'] then
@@ -71,7 +71,7 @@ local function bubbleSort(t)
 			end
 		end
 	end
-	
+
 	return list
 end
 
@@ -96,7 +96,7 @@ local function Element_Template(self, idx, obj, index, prop)
 	UIStroke.Color = Color3.fromRGB(170, 0, 225)
 
 	obj.Label = {}
-	
+
 	obj.Label.Part = Instance.new("TextLabel")
 	obj.Label.Part.BackgroundTransparency = 1
 	obj.Label.Part.Size = UDim2.fromScale(0.7, 1)
@@ -107,7 +107,7 @@ local function Element_Template(self, idx, obj, index, prop)
 	obj.Label.Part.TextXAlignment = Enum.TextXAlignment.Left
 	obj.Label.Part.Parent = obj.Part
 	obj.Label.Part.Name = 'Label'
-	
+
 	obj.Name = prop.LabelText or index
 	obj.Label.Part.Text = prop.LabelText or ''
 end
@@ -117,7 +117,7 @@ local function update_tabs_buttons(Window)
 	for _, v in ipairs(Window.TabsFrame.Part:GetChildren()) do
 		table.insert(check, v.Name)
 	end
-	
+
 	for i, v in ipairs(Window.Tabs.Part:GetChildren()) do	
 		if not table.find(check, v.Name) then
 			local obj = {}
@@ -130,21 +130,21 @@ local function update_tabs_buttons(Window)
 			obj.Part.Font = Enum.Font.SourceSans
 			obj.Part.TextColor3 = Color3.fromRGB(255, 255, 255)
 			obj.Part.Parent = Window.TabsFrame.Part
-	
+
 			local UICorner = Instance.new('UICorner')
 			UICorner.CornerRadius = UDim.new(1, 0)
 			UICorner.Parent = obj.Part
-	
+
 			local UIStroke = Instance.new('UIStroke')
 			UIStroke.Color = Color3.fromRGB(170, 0, 255)
 			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 			UIStroke.Parent = obj.Part
-	
+
 			local LocalScript = Instance.new("LocalScript")
 			LocalScript.Parent = obj.Part
 			coroutine.wrap(function()
 				local script = LocalScript
-	
+
 				script.Parent.MouseButton1Click:Connect(function()
 					pcall(function()
 						for _, v in ipairs(script.Parent.Parent.Parent.TabsFolder:GetChildren()) do
@@ -154,7 +154,7 @@ local function update_tabs_buttons(Window)
 					script.Parent.Parent.Parent.TabsFolder:FindFirstChild(script.Parent.Name).Visible = true
 				end)
 			end)()
-	
+
 			table.insert(Window.TabsFrame, obj)
 		else
 			Window.TabsFrame.Part[v.Name].Size = UDim2.fromScale(1/#Window.Tabs.Part:GetChildren() - 0.015, 0.7)
@@ -164,14 +164,24 @@ end
 
 function GuiLibrary:KeySystem(prop)
 	local obj = {}
-	
+
 	setmetatable(obj, GuiLibrary.KeyClass)
-	
+
 	if prop.KeylessOption then obj.KeyLess = Signal.new() end
 	obj.KeySignal = Signal.new()
 	obj.Verify = Signal.new()
 	obj.Get = Signal.new()
-	
+	obj.Auto = Signal.new()
+
+	makefolder('ZLP_KEYSYSTEM')
+	if not prop.Name then return error('Name required!') end
+
+	local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
+
+	if not isfile(filename) then
+		writefile(filename, '')
+	end
+
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -215,7 +225,7 @@ function GuiLibrary:KeySystem(prop)
 	local Canvas1 = Instance.new('CanvasGroup')
 	local Canvas2 = Instance.new('CanvasGroup')
 	local Canvas3 = Instance.new('CanvasGroup')
-	
+
 	local UICorner1 = Instance.new("UICorner")
 	local Effect1 = Instance.new("Frame")
 	local UIAspectRatioConstraint1 = Instance.new("UIAspectRatioConstraint")
@@ -228,7 +238,7 @@ function GuiLibrary:KeySystem(prop)
 	local Effect3 = Instance.new("Frame")
 	local UIAspectRatioConstraint3 = Instance.new("UIAspectRatioConstraint")
 	local UICorner3_2 = Instance.new("UICorner")
-	
+
 	local CloseUI = Instance.new("TextButton")
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
 
@@ -251,7 +261,7 @@ function GuiLibrary:KeySystem(prop)
 
 	UICorner.CornerRadius = UDim.new(0, 16)
 	UICorner.Parent = Frame
-	
+
 	UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke.Thickness = 4
 	UIStroke.Parent = Frame
@@ -273,13 +283,13 @@ function GuiLibrary:KeySystem(prop)
 	Label.TextScaled = true
 	Label.TextSize = 14.000
 	Label.TextWrapped = true
-	
+
 	coroutine.wrap(function()
 		local LocalScript = Instance.new('LocalScript')
 		LocalScript.Parent = Label
-		
+
 		local script = LocalScript
-		
+
 		local UserInputService = game:GetService("UserInputService")
 
 		local gui = script.Parent
@@ -323,7 +333,7 @@ function GuiLibrary:KeySystem(prop)
 
 	UIPadding.Parent = Label
 	UIPadding.PaddingTop = UDim.new(0, 4)
-	
+
 	CloseUI.Name = "CloseUI"
 	CloseUI.Parent = Label
 	CloseUI.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -350,7 +360,7 @@ function GuiLibrary:KeySystem(prop)
 
 	end
 	coroutine.wrap(UQYFOHY_fake_script)()
-	
+
 	obj.Key = Instance.new('Frame')
 	obj.Key.Name = "KeyINPUT"
 	obj.Key.Parent = Frame
@@ -365,10 +375,10 @@ function GuiLibrary:KeySystem(prop)
 
 	UICorner_2.CornerRadius = UDim.new(0, 16)
 	UICorner_2.Parent = obj.Key
-	
+
 	UIFlex.ItemLineAlignment = Enum.ItemLineAlignment.Center
 	UIFlex.Parent = obj.Key
-	
+
 	UIStroke1.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke1.Thickness = 1
 	UIStroke1.Parent = obj.Key
@@ -399,7 +409,7 @@ function GuiLibrary:KeySystem(prop)
 	Input.Position = UDim2.new(0.219999999, 0, 0.125, 0)
 	Input.Size = UDim2.new(0.75, 0, 0.75, 0)
 	Input.ZIndex = 2
-	
+
 	UIStroke5.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke5.Thickness = 0.5
 	UIStroke5.Parent = Input
@@ -437,11 +447,11 @@ function GuiLibrary:KeySystem(prop)
 
 	UICorner_4.CornerRadius = UDim.new(0, 16)
 	UICorner_4.Parent = GetKey
-	
+
 	UIStroke2.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke2.Thickness = 1
 	UIStroke2.Parent = GetKey
-	
+
 	UIFlex1.ItemLineAlignment = Enum.ItemLineAlignment.Center
 	UIFlex1.Parent = GetKey
 
@@ -473,11 +483,11 @@ function GuiLibrary:KeySystem(prop)
 	TextButton.Text = ""
 	TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 	TextButton.TextSize = 14.000
-	
+
 	Canvas1.Parent = TextButton
 	Canvas1.BackgroundTransparency = 1
 	Canvas1.Size = UDim2.fromScale(1, 1)
-	
+
 	UICorner1.CornerRadius = UDim.new(0, 16)
 	UICorner1.Parent = Canvas1
 
@@ -522,11 +532,11 @@ function GuiLibrary:KeySystem(prop)
 
 	UICorner_5.CornerRadius = UDim.new(0, 16)
 	UICorner_5.Parent = VerifyKey
-	
+
 	UIStroke3.Color = Color3.fromRGB(217, 0, 255)
 	UIStroke3.Thickness = 1
 	UIStroke3.Parent = VerifyKey
-	
+
 	UIFlex2.ItemLineAlignment = Enum.ItemLineAlignment.Center
 	UIFlex2.Parent = VerifyKey
 
@@ -558,7 +568,7 @@ function GuiLibrary:KeySystem(prop)
 	TextButton_2.Text = ""
 	TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 	TextButton_2.TextSize = 14.000
-	
+
 	Canvas2.Parent = TextButton_2
 	Canvas2.BackgroundTransparency = 1
 	Canvas2.Size = UDim2.fromScale(1, 1)
@@ -595,7 +605,7 @@ function GuiLibrary:KeySystem(prop)
 
 	UIAspectRatioConstraint_4.Parent = VerifyKey
 	UIAspectRatioConstraint_4.AspectRatio = 10.980
-	
+
 	if prop.KeylessOption then
 		VerifyKey_2.Name = "KeyLess"
 		VerifyKey_2.Parent = Frame
@@ -605,17 +615,17 @@ function GuiLibrary:KeySystem(prop)
 		VerifyKey_2.BorderSizePixel = 0
 		VerifyKey_2.LayoutOrder = 4
 		VerifyKey_2.Size = UDim2.new(0.5, 0, 0.150000006, 0)
-	
+
 		UICorner_6.CornerRadius = UDim.new(0, 16)
 		UICorner_6.Parent = VerifyKey_2
-		
+
 		UIStroke4.Color = Color3.fromRGB(111, 0, 166)
 		UIStroke4.Thickness = 1
 		UIStroke4.Parent = VerifyKey_2
-	
+
 		UIFlex3.ItemLineAlignment = Enum.ItemLineAlignment.Center
 		UIFlex3.Parent = VerifyKey_2
-	
+
 		Label_5.Name = "Label"
 		Label_5.Parent = VerifyKey_2
 		Label_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -632,7 +642,7 @@ function GuiLibrary:KeySystem(prop)
 		Label_5.TextSize = 16.000
 		Label_5.TextWrapped = true
 		Label_5.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 		TextButton_3.Parent = VerifyKey_2
 		TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TextButton_3.BackgroundTransparency = 1.000
@@ -644,14 +654,14 @@ function GuiLibrary:KeySystem(prop)
 		TextButton_3.Text = ""
 		TextButton_3.TextColor3 = Color3.fromRGB(0, 0, 0)
 		TextButton_3.TextSize = 14.000
-		
+
 		Canvas3.Parent = TextButton_3
 		Canvas3.BackgroundTransparency = 1
 		Canvas3.Size = UDim2.fromScale(1, 1)
-	
+
 		UICorner3.CornerRadius = UDim.new(0, 16)
 		UICorner3.Parent = Canvas3
-	
+
 		Effect3.Name = "Effect"
 		Effect3.Parent = Canvas3
 		Effect3.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -660,12 +670,12 @@ function GuiLibrary:KeySystem(prop)
 		Effect3.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Effect3.BorderSizePixel = 0
 		Effect3.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
-	
+
 		UIAspectRatioConstraint3.Parent = Effect3
-	
+
 		UICorner3_2.CornerRadius = UDim.new(1, 0)
 		UICorner3_2.Parent = Effect3
-	
+
 		btn_3.Name = "btn"
 		btn_3.Parent = VerifyKey_2
 		btn_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -678,7 +688,7 @@ function GuiLibrary:KeySystem(prop)
 		btn_3.Text = "click"
 		btn_3.TextColor3 = Color3.fromRGB(111, 0, 166)
 		btn_3.TextSize = 14.000
-	
+
 		UIAspectRatioConstraint_5.Parent = VerifyKey_2
 		UIAspectRatioConstraint_5.AspectRatio = 5.660
 	end
@@ -706,6 +716,7 @@ function GuiLibrary:KeySystem(prop)
 		script.Parent.Input.TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 			script.Parent:SetAttribute('value', script.Parent.Input.TextBox.Text)
 			obj.KeySignal:Fire(script.Parent.Input.TextBox.Text)
+			writefile(filename, script.Parent.Input.TextBox.Text)
 		end)
 	end
 	coroutine.wrap(GSSLKZC_fake_script)()
@@ -902,13 +913,17 @@ function GuiLibrary:KeySystem(prop)
 	end
 	if prop.KeylessOption then coroutine.wrap(KUWEGDY_fake_script)() end
 	
+	task.spawn(function()
+		task.wait(0.02)
+		obj.Auto:Fire(readfile(filename))
+	end)
 	return obj
 end
 
 function GuiLibrary:NewWindow(properties)
 	local obj = {}
 	setmetatable(obj, GuiLibrary.WindowClass)
-	
+
 	obj.ScreenGUI = Instance.new("ScreenGui")
 	obj.ScreenGUI.Name = "https://discord.gg/nNYyfcsfR8"
 	obj.ScreenGUI.Parent = game:GetService("CoreGui")
@@ -918,7 +933,7 @@ function GuiLibrary:NewWindow(properties)
 	obj.ScreenGUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
 	obj.ScreenGUI.ScreenInsets = Enum.ScreenInsets.None
 	obj.ScreenGUI.ResetOnSpawn = false
-	
+
 	obj.Window = {}
 	obj.Window.Part = Instance.new("Frame")
 	obj.Window.Part.Name = "Main"
@@ -929,7 +944,7 @@ function GuiLibrary:NewWindow(properties)
 	obj.Window.Part.Position = UDim2.new(0.419, 0, 0.1, 0)
 	obj.Window.Part.Size = UDim2.new(0.8, 0, 0.8, 0)
 	obj.Window.Part.Parent = obj.ScreenGUI
-	
+
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint.Parent = obj.Window.Part
 	UIAspectRatioConstraint.AspectRatio = 0.800
@@ -937,12 +952,12 @@ function GuiLibrary:NewWindow(properties)
 	local UICorner = Instance.new("UICorner")
 	UICorner.CornerRadius = UDim.new(0, 16)
 	UICorner.Parent = obj.Window.Part
-	
+
 	obj.Window.UIStroke = Instance.new("UIStroke")
 	obj.Window.UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	obj.Window.UIStroke.Thickness = 4
 	obj.Window.UIStroke.Parent = obj.Window.Part
-	
+
 	obj.Window.Upper = {}
 	obj.Window.Upper.Part = Instance.new('Frame')
 	obj.Window.Upper.Part.Name = "Upper"
@@ -952,14 +967,14 @@ function GuiLibrary:NewWindow(properties)
 	obj.Window.Upper.Part.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	obj.Window.Upper.Part.BorderSizePixel = 0
 	obj.Window.Upper.Part.Size = UDim2.new(1, 0, 0.12, 0)
-	
+
 	obj.Window.Tabs = {}
 	obj.Window.Tabs.Part = Instance.new('Folder')
 	obj.Window.Tabs.Part.Name = "TabsFolder"
 	obj.Window.Tabs.Part.Parent = obj.Window.Part
-	
+
 	-- Upper
-	
+
 	obj.Window.Upper.Label = {}
 	obj.Window.Upper.Label.Part = Instance.new("TextLabel")
 	obj.Window.Upper.Label.Part.Name = "Label"
@@ -1002,25 +1017,25 @@ function GuiLibrary:NewWindow(properties)
 	local UICorner = Instance.new('UICorner')
 	UICorner.CornerRadius = UDim.new(0, 16)
 	UICorner.Parent = obj.Window.Upper.Part
-	
+
 	local UIStroke = Instance.new('UIStroke')
 	UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke.Thickness = 4
 	UIStroke.Parent = obj.Window.Upper.Part
-	
+
 	local CloseScript = Instance.new("LocalScript")
 	local DragScript = Instance.new("LocalScript")
-	
+
 	CloseScript.Parent = CloseUI
 	DragScript.Parent = obj.Window.Upper.Part
-	
+
 	coroutine.wrap(function()
 		local script = CloseScript
 		script.Parent.MouseButton1Click:Connect(function()
 			script.Parent.Parent.Parent:Destroy()
 		end)
 	end)()
-	
+
 	coroutine.wrap(function()
 		local script = DragScript
 		local UserInputService = game:GetService("UserInputService")
@@ -1063,14 +1078,14 @@ function GuiLibrary:NewWindow(properties)
 			end
 		end)
 	end)()
-	
+
 	return obj
 end
 
 function GuiLibrary.WindowClass:CreateTab(prop)
 	local obj = {}
 	setmetatable(obj, GuiLibrary.TabClass)
-	
+
 	local index = #self.Window.Tabs.Part:GetChildren() + 1
 	obj[index] = {}
 	obj[index].Name = prop.Name
@@ -1085,16 +1100,16 @@ function GuiLibrary.WindowClass:CreateTab(prop)
 	obj[index].Part.Position = UDim2.new(0, 0, 0.13, 8)
 	obj[index].Part.Visible = (index == 1)
 	obj[index].Part:SetAttribute('name', prop.Name)
-	
+
 	local UICorner = Instance.new("UICorner")
 	UICorner.CornerRadius = UDim.new(0, 16)
 	UICorner.Parent = obj[index].Part
-	
+
 	local UIStroke = Instance.new('UIStroke')
 	UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke.Thickness = 4
 	UIStroke.Parent = obj[index].Part
-	
+
 	obj[index].Frame = {}
 	obj[index].Frame.Part = Instance.new("ScrollingFrame")
 	obj[index].Frame.Part.Name = 'Frame'
@@ -1108,17 +1123,17 @@ function GuiLibrary.WindowClass:CreateTab(prop)
 	obj[index].Frame.Part.ScrollBarThickness = 4
 	obj[index].Frame.Part.ScrollBarImageColor3 = Color3.fromRGB(170, 0, 255)
 	obj[index].Frame.Part:SetAttribute('resize', false)
-	
+
 	local UIListLayout = Instance.new("UIListLayout")
 	UIListLayout.Parent = obj[index].Frame.Part
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.Padding = UDim.new(0, 8)
-	
+
 	local UIPadding = Instance.new("UIPadding")
 	UIPadding.Parent = obj[index].Frame.Part
 	UIPadding.PaddingTop = UDim.new(0, 8)
 	UIPadding.PaddingBottom = UDim.new(0, 8)
-	
+
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj[index].Frame.Part
 	coroutine.wrap(function()
@@ -1129,11 +1144,11 @@ function GuiLibrary.WindowClass:CreateTab(prop)
 				script.Parent:SetAttribute("resize", false)
 			end
 		end)
-		
+
 		wait()
 		script.Parent:SetAttribute("resize", true)
 	end)()
-	
+
 	if index > 1 then
 		if not self.Window.TabsFrame then
 			self.Window.TabsFrame = {}
@@ -1157,28 +1172,28 @@ function GuiLibrary.WindowClass:CreateTab(prop)
 			UIPadding.PaddingTop = UDim.new(0.15, 0)
 			UIPadding.Parent = self.Window.TabsFrame.Part
 		end
-		
+
 		for i, v in ipairs(self.Window.Tabs.Part:GetChildren()) do
 			v.Size = UDim2.new(1, 0, 0.78, 0)
 			v.Position = UDim2.new(0, 0, 0.22, 0)
 		end
-		
+
 		task.spawn(function()
 			update_tabs_buttons(self.Window)
 			wait(0.5)
 		end)
 	end
-	
+
 	return obj
 end
 
 function GuiLibrary.TabClass:CreateToggle(prop)
 	local obj = {}
 	setmetatable(obj, GuiLibrary.ToggleClass)
-	
+
 	obj.OnValueChanged = Signal.new()
 	obj.OnDisabledChanged = Signal.new()
-	
+
 	local idx
 	for i, _ in pairs(self) do
 		idx = i
@@ -1188,7 +1203,7 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 	Element_Template(self, idx, obj, index, prop)
 	obj.Class = 'Toggle'
 	obj.Part.Label.Size = UDim2.fromScale(0.68, 1)
-	
+
 	obj.Part:SetAttribute("disabled", prop.IsDisabled)
 	obj.Part:SetAttribute("state", prop.IsOn)
 
@@ -1207,7 +1222,7 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 	Toggle.BorderSizePixel = 0
 	Toggle.Position = UDim2.new(0.75, 0, 0.25, 0)
 	Toggle.Size = UDim2.new(0.200000003, 0, 0.5, 0)
-	
+
 	UIStroke.BorderStrokePosition = Enum.BorderStrokePosition.Inner
 	UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke.Parent = Toggle
@@ -1251,7 +1266,7 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 
 		local tweeninfo = TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out, 0, false, 0)
 		local colortweeninfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
-		
+
 		local function funcstate()
 			if script.Parent.Parent.Parent:GetAttribute("state") then
 				Tween:Create(button.Parent, tweeninfo, {BackgroundTransparency = 0}):Play()
@@ -1263,7 +1278,7 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 				Tween:Create(button.Parent.Circle, tweeninfo, {Size = UDim2.new(0.75, 0, 0.75, 0)}):Play()
 			end
 		end
-		
+
 		local function funcdisabled()
 			if script.Parent.Parent.Parent:GetAttribute("disabled") then
 				if script.Parent.Parent.Parent:GetAttribute("state") then
@@ -1314,12 +1329,12 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 		script.Parent.Parent.Parent:GetAttributeChangedSignal("disabled"):Connect(function()
 			funcdisabled()
 		end)
-		
+
 		funcstate()
 		funcdisabled()
 	end
 	coroutine.wrap(ETZS_fake_script)()
-	
+
 	obj.Part:GetAttributeChangedSignal("state"):Connect(function()
 		obj.OnValueChanged:Fire(obj.Part:GetAttribute("state"))
 	end)
@@ -1327,35 +1342,35 @@ function GuiLibrary.TabClass:CreateToggle(prop)
 	obj.Part:GetAttributeChangedSignal("disabled"):Connect(function()
 		obj.OnDisabledChanged:Fire(obj.Part:GetAttribute("disabled"))
 	end)
-	
+
 	return obj
 end
 
 function GuiLibrary.TabClass:CreateList(prop)
 	local obj = {}
-	
+
 	obj.OnValueChanged = Signal.new()
 	obj.OnDisabledChanged = Signal.new()
-	
+
 	setmetatable(obj, GuiLibrary.ListClass)
-	
+
 	local idx
 	for i, _ in pairs(self) do
 		idx = i
 	end
 
 	local index = #self[idx].Frame.Part:GetChildren() - 2
-	
+
 	Element_Template(self, idx, obj, index, prop)
 	obj.Class = 'List'
 	obj.Part.ZIndex = 2	
 	obj.Part.Label.Size = UDim2.fromScale(0.48, 1)
-	
+
 	obj.Part:SetAttribute('state', false)
 	obj.Part:SetAttribute('disabled', prop.IsDisabled)
 	obj.Part:SetAttribute('value', '')
 	obj.Part.Size = UDim2.fromScale(0.97, 0.5)
-	
+
 	obj.ListButton = {}
 	obj.ListButton.Part = Instance.new('Frame')
 	obj.ListButton.Part.Parent = obj.Part
@@ -1365,7 +1380,7 @@ function GuiLibrary.TabClass:CreateList(prop)
 	obj.ListButton.Part.ZIndex = 2
 	obj.ListButton.Part.AutoLocalize = false
 	obj.ListButton.Part.Name = 'ListButton'
-	
+
 	local ListButton = obj.ListButton.Part
 	local UICorner = Instance.new("UICorner")
 	local Label = Instance.new("TextLabel")
@@ -1373,7 +1388,7 @@ function GuiLibrary.TabClass:CreateList(prop)
 	local TextButton = Instance.new("TextButton")
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	local UIStroke = Instance.new('UIStroke')
-	
+
 	UIStroke.Color = Color3.fromRGB(170, 0, 225)
 	UIStroke.Parent = ListButton
 
@@ -1423,7 +1438,7 @@ function GuiLibrary.TabClass:CreateList(prop)
 	UIAspectRatioConstraint.Parent = ListButton
 	UIAspectRatioConstraint.AspectRatio = 3.140
 	UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
-	
+
 	local Localscript = Instance.new('LocalScript')
 	Localscript.Parent = TextButton
 
@@ -1439,7 +1454,7 @@ function GuiLibrary.TabClass:CreateList(prop)
 		local colortweeninfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0)
 
 		local TweenFix = true
-		
+
 		local function funcstate()
 			if not script.Parent.Parent.Parent:GetAttribute("disabled") then
 				script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.CanvasPosition = Vector2.new(0, 0)
@@ -1473,19 +1488,19 @@ function GuiLibrary.TabClass:CreateList(prop)
 					TweenFix = true
 
 					script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.CanvasSize = UDim2.fromOffset(0, 0)
-					
+
 					local canvafix
 					for i, v in ipairs(script.Parent.Parent.Parent.List.Scroll.ScrollingFrame:GetChildren()) do
 						if v:IsA("Frame") then
 							canvafix = v.UIAspectRatioConstraint:Clone()
 							v.UIAspectRatioConstraint:Destroy()
-							
+
 							script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.CanvasSize = UDim2.fromOffset(0, script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.AbsoluteCanvasSize.Y + 2)
-							
+
 							canvafix.Parent = v
 						end
 					end
-					
+
 					script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.ScrollBarImageTransparency = 0
 					script.Parent.Parent.Parent.Parent:SetAttribute('resize', true)
 				else
@@ -1512,13 +1527,13 @@ function GuiLibrary.TabClass:CreateList(prop)
 					Tween:Create(button.Parent.Parent.Label, tweeninfo1, {Position = UDim2.new(0.05, 0, 0, 0)}):Play()
 					Tween:Create(button.Parent.Parent.ListButton, tweeninfo1, {Position = UDim2.new(0.55, 0, 0.075, 0)}):Play()
 					TweenFix = true
-					
+
 					script.Parent.Parent.Parent.List.Scroll.ScrollingFrame.ScrollBarImageTransparency = 1
 					script.Parent.Parent.Parent.Parent:SetAttribute('resize', true)
 				end
 			end
 		end
-		
+
 		local function funcdisabled()
 			obj.OnDisabledChanged:Fire(obj.Part:GetAttribute("disabled"))
 			if script.Parent.Parent.Parent:GetAttribute("disabled") then
@@ -1575,17 +1590,17 @@ function GuiLibrary.TabClass:CreateList(prop)
 				script.Parent.Parent.Label.Text = 'None'
 			end
 		end)
-		
+
 		funcstate()
 		funcdisabled()
-		
+
 		if script.Parent.Parent.Parent:GetAttribute("value") ~= '' then
 			script.Parent.Parent.Label.Text = script.Parent.Parent.Parent.List.Scroll.ScrollingFrame[script.Parent.Parent.Parent:GetAttribute("value")].Label.Text
 		else
 			script.Parent.Parent.Label.Text = 'None'
 		end
 	end
-	
+
 	obj.List = {}
 	obj.List.Part = Instance.new('Frame')
 	obj.List.Part.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -1593,14 +1608,14 @@ function GuiLibrary.TabClass:CreateList(prop)
 	obj.List.Part.Size = UDim2.fromScale(0.4, 0)
 	obj.List.Part.Name = 'List'
 	obj.List.Part.Parent = obj.Part
-	
+
 	local List = obj.List.Part
 	local UICorner = Instance.new("UICorner")
 	local Scroll = Instance.new("Frame")
 	local ScrollingFrame = Instance.new("ScrollingFrame")
 	local UIListLayout = Instance.new("UIListLayout")
 	local UIPadding = Instance.new("UIPadding")
-	
+
 	local UIStroke = Instance.new('UIStroke')
 	UIStroke.Color = Color3.fromRGB(170, 0, 255)
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -1634,7 +1649,7 @@ function GuiLibrary.TabClass:CreateList(prop)
 	UIPadding.Parent = ScrollingFrame
 	UIPadding.PaddingTop = UDim.new(0, 2)
 	obj.Values = {}
-	
+
 	local count = 0
 	local max = 0
 	for _, _ in pairs(prop.Values) do
@@ -1649,11 +1664,11 @@ function GuiLibrary.TabClass:CreateList(prop)
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
 		local UIAspectRatio = Instance.new("UIAspectRatioConstraint")
-		
+
 		UIAspectRatio.AspectRatio = 9.87
 		UIAspectRatio.DominantAxis = Enum.DominantAxis.Width
 		UIAspectRatio.Parent = obj.Values[i].Part
-		
+
 		obj.Values[i].Part.Parent = ScrollingFrame
 		obj.Values[i].Part.Name = i
 		obj.Values[i].Part.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1663,11 +1678,11 @@ function GuiLibrary.TabClass:CreateList(prop)
 		obj.Values[i].Part.LayoutOrder = 1
 		obj.Values[i].Part.Size = UDim2.new(0.98, 0, 0.4, 0)
 		obj.Values[i].Part.LayoutOrder = v.position or max
-		
+
 		if #prop.Values ~= 0 then
 			obj.Values[i].Part.Name = v
 		end
-		
+
 		UIStroke.Color = Color3.fromRGB(170, 0, 255)
 		UIStroke.Thickness = 0.5
 		UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -1714,21 +1729,21 @@ function GuiLibrary.TabClass:CreateList(prop)
 		end
 		coroutine.wrap(MHFHHDV_fake_script)()
 	end
-	
+
 	coroutine.wrap(ZMXAQ_fake_script)()
-	
+
 	return obj
 end
 
 function GuiLibrary.TabClass:CreateButton(prop)
 	local obj = {}
-	
+
 	obj.OnClick = Signal.new()
 	obj.OnDisabledChanged = Signal.new()
 	obj.Class = 'Button'
 
 	setmetatable(obj, GuiLibrary.ButtonClass)
-	
+
 	local idx
 	for i, _ in pairs(self) do
 		idx = i
@@ -1736,11 +1751,11 @@ function GuiLibrary.TabClass:CreateButton(prop)
 
 	local index = #self[idx].Frame.Part:GetChildren() - 2
 	Element_Template(self, idx, obj, index, prop)
-	
+
 	obj.Part.Label.Size = UDim2.fromScale(0.9, 1)
-	
+
 	obj.Part:SetAttribute("disabled", prop.IsDisabled)
-	
+
 	local btn = Instance.new("TextLabel")
 	btn.Name = "btn"
 	btn.Parent = obj.Part
@@ -1754,7 +1769,7 @@ function GuiLibrary.TabClass:CreateButton(prop)
 	btn.Text = "click"
 	btn.TextColor3 = Color3.fromRGB(170, 0, 255)
 	btn.TextSize = 14.000
-	
+
 	obj.Button = {}
 	obj.Button.Part = Instance.new('TextButton')
 	local TextButton = obj.Button.Part
@@ -1769,16 +1784,16 @@ function GuiLibrary.TabClass:CreateButton(prop)
 	TextButton.Text = ""
 	TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 	TextButton.TextSize = 14.000
-	
+
 	local CanvasGroup = Instance.new('CanvasGroup')
 	CanvasGroup.Parent = TextButton
 	CanvasGroup.BackgroundTransparency = 1
 	CanvasGroup.Size = UDim2.fromScale(1, 1)
-	
+
 	local UICorner = Instance.new('UICorner')
 	UICorner.Parent = CanvasGroup
 	UICorner.CornerRadius = UDim.new(0, 16)
-	
+
 	local Effect = Instance.new("Frame")
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	local UICorner = Instance.new("UICorner")
@@ -1796,7 +1811,7 @@ function GuiLibrary.TabClass:CreateButton(prop)
 
 	UICorner.CornerRadius = UDim.new(1, 0)
 	UICorner.Parent = Effect
-	
+
 	local scriptt = Instance.new('LocalScript')
 	scriptt.Parent = TextButton
 
@@ -1865,7 +1880,7 @@ function GuiLibrary.TabClass:CreateButton(prop)
 		end)
 	end
 	coroutine.wrap(HGGN_fake_script)()
-	
+
 	return obj
 end
 
@@ -1885,35 +1900,35 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	Element_Template(self, idx, obj, index, prop)
 	obj.Class = 'Slider'
 	obj.Values = {}
-	
+
 	obj.Values.Min = prop.Values.MinValue or 0
 	obj.Values.Max = prop.Values.MaxValue or 0
 	obj.Values.SliderStep = prop.Values.SliderStep or 0.01
-	
+
 	obj.Part.Size = UDim2.fromScale(obj.Part.Size.X.Scale, 0.2)
 	obj.Part.UIAspectRatioConstraint.AspectRatio = 5
 	obj.Part.Label.Position = UDim2.fromScale(0.05, 0.1)
 	obj.Part.Label.Size = UDim2.fromScale(0.6, 0.65)
 	obj.Part:SetAttribute('value', 0)
-	
+
 	local UIPadding = Instance.new('UIPadding')
 	UIPadding.Parent = obj.Part
 	UIPadding.PaddingBottom = UDim.new(0, 8)
-	
+
 	local NumberValue1 = Instance.new('NumberValue')
 	NumberValue1.Parent = obj.Part
 	NumberValue1.Name = 'Valuee'
-	
+
 	local BoolValue = Instance.new('BoolValue')
 	BoolValue.Parent = obj.Part
 	BoolValue.Name = 'Update'
-	
+
 	obj.ValueChanger = {}
 	obj.ValueChanger.Min = prop.Values.MinValue or 0
 	obj.ValueChanger.Part = Instance.new('NumberValue')
 	obj.ValueChanger.Part.Parent = obj.Part
 	obj.ValueChanger.Part.Name = 'Custom'
-	
+
 	local TextValue = Instance.new('TextLabel')
 	TextValue.BackgroundTransparency = 1
 	TextValue.Position = UDim2.fromScale(0.65, 0.125)
@@ -1924,7 +1939,7 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	TextValue.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TextValue.Name = 'Value'
 	TextValue.Parent = obj.Part
-	
+
 	local Slide = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
 	local Circle = Instance.new("Frame")
@@ -1933,7 +1948,7 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	local Button = Instance.new("TextButton")
 	local Stroke = Instance.new("UIStroke")
 	local Canvas = Instance.new('CanvasGroup')
-	
+
 	Stroke.Color = Color3.fromRGB(170, 0, 255)
 	Stroke.Thickness = 2
 	Stroke.Parent = Slide
@@ -1977,15 +1992,15 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 	Button.Text = ""
 	Button.TextColor3 = Color3.fromRGB(0, 0, 0)
 	Button.TextSize = 14.000
-	
+
 	Canvas.Transparency = 1
 	Canvas.Position = UDim2.fromScale(-0.95)
 	Canvas.Size = UDim2.fromScale(1, 1)
 	Canvas.Parent = Slide
-	
+
 	local Pattern = Instance.new("ImageLabel")
 	local UICorner = Instance.new("UICorner")
-	
+
 	Pattern.Name = "Pattern"
 	Pattern.Parent = Canvas
 	Pattern.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
@@ -2002,14 +2017,14 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 
 	UICorner.CornerRadius = UDim.new(1, 0)
 	UICorner.Parent = Canvas
-	
+
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj.Part
-	
+
 	coroutine.wrap(function()
 		local UserInputService = game:GetService("UserInputService")
 		local Tween = game:GetService("TweenService")
-		
+
 		local script = LocalScript
 
 		local range = NumberRange.new(prop.Values.MinValue, prop.Values.MaxValue)
@@ -2104,7 +2119,7 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 
 			Twen = true
 		end)
-		
+
 		script.Parent.Update:GetPropertyChangedSignal("Value"):Connect(function()
 			if script.Parent.Update.Value then
 				step = obj.Values.SliderStep or step
@@ -2115,16 +2130,16 @@ function GuiLibrary.TabClass:CreateSlider(prop)
 			end
 		end)
 	end)()
-	
+
 	obj.ValueChanger.Part.Value = prop.Values.CurrentValue or 0
 	obj.Part:SetAttribute("disabled", prop.IsDisabled)
-	
+
 	return obj
 end
 
 function GuiLibrary.TabClass:CreateMultiLabel(prop)
 	local obj = {}
-	
+
 	obj.Class = 'Element'
 
 	setmetatable(obj, GuiLibrary.ElementClass)
@@ -2136,16 +2151,16 @@ function GuiLibrary.TabClass:CreateMultiLabel(prop)
 
 	local index = #self[idx].Frame.Part:GetChildren() - 2
 	Element_Template(self, idx, obj, index, prop)
-	
+
 	obj.Part.UIAspectRatioConstraint:Destroy()
 	obj.Part.Label:Destroy()
-	
+
 	local Event = Instance.new('BoolValue')
 	Event.Name = 'Event'
 	Event.Parent = obj.Part
-	
+
 	obj.Elements = {}
-	
+
 	obj.Elements.Part = Instance.new('Frame')
 	obj.Elements.Part.Name = "Elements"
 	obj.Elements.Part.Parent = game.StarterGui.ScreenGui.Main.TabsFolder["2"].Frame["1"]
@@ -2155,16 +2170,16 @@ function GuiLibrary.TabClass:CreateMultiLabel(prop)
 	obj.Elements.Part.BorderSizePixel = 0
 	obj.Elements.Part.Size = UDim2.new(1, 0, 1, 0)
 	obj.Elements.Part.Parent = obj.Part
-	
+
 	local UIListLayout = Instance.new('UIListLayout')
-	
+
 	UIListLayout.Parent = obj.Elements.Part
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.Padding = UDim.new(0, 8)
-	
+
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj.Part
-	
+
 	local function DZAZT_fake_script()
 		local script = LocalScript
 
@@ -2177,7 +2192,7 @@ function GuiLibrary.TabClass:CreateMultiLabel(prop)
 			end
 
 			size += 8 * (#script.Parent.Elements:GetChildren() - 1)
-			
+
 			script.Parent.Size = UDim2.fromScale(0.98, size / script.Parent.Parent.AbsoluteCanvasSize.Y)
 		end
 
@@ -2199,7 +2214,7 @@ function GuiLibrary.TabClass:CreateMultiLabel(prop)
 		resize()
 	end
 	coroutine.wrap(DZAZT_fake_script)()
-	
+
 	return obj
 end
 
@@ -2214,20 +2229,20 @@ function GuiLibrary.TabClass:CreateInput(prop)
 	for i, _ in pairs(self) do
 		idx = i
 	end
-	
+
 	obj.OnValueChanged = Signal.new()
 	obj.OnDisabledChanged = Signal.new()
 
 	local index = #self[idx].Frame.Part:GetChildren() - 2
 	Element_Template(self, idx, obj, index, prop)
-	
+
 	local LocalScript = Instance.new('LocalScript')
 	LocalScript.Parent = obj.Part
-	
+
 	obj.TextInput = {}
 	obj.TextInput.Part = Instance.new('TextBox')
 	obj.TextInput.Text = prop.TextInBox or ""
-	
+
 	local Input = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -2248,7 +2263,7 @@ function GuiLibrary.TabClass:CreateInput(prop)
 	UIAspectRatioConstraint.Parent = Input
 	UIAspectRatioConstraint.AspectRatio = 4.000
 	UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
-	
+
 	UIStoke.Parent = Input
 	UIStoke.Color = Color3.fromRGB(170, 0, 255)
 	UIStoke.Thickness = 0.5
@@ -2266,10 +2281,10 @@ function GuiLibrary.TabClass:CreateInput(prop)
 	obj.TextInput.Part.Text = prop.TextInBox or ""
 	obj.TextInput.Part.TextColor3 = Color3.fromRGB(255, 255, 255)
 	obj.TextInput.Part.TextSize = 14.000
-	
+
 	coroutine.wrap(function()
 		local script = LocalScript
-		
+
 		local Tween = game:GetService("TweenService")
 
 		local colortweeninfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
@@ -2289,7 +2304,7 @@ function GuiLibrary.TabClass:CreateInput(prop)
 		script.Parent.Input.TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 			script.Parent:SetAttribute('value', script.Parent.Input.TextBox.Text)
 		end)
-		
+
 		obj.Part:GetAttributeChangedSignal("value"):Connect(function()
 			obj.OnValueChanged:Fire(obj.Part:GetAttribute("value"))
 		end)
@@ -2298,9 +2313,9 @@ function GuiLibrary.TabClass:CreateInput(prop)
 			obj.OnDisabledChanged:Fire(obj.Part:GetAttribute("disabled"))
 		end)
 	end)()
-	
+
 	obj.Part:SetAttribute("disabled", prop.IsDisabled)
-	
+
 	return obj
 end
 
@@ -2341,15 +2356,15 @@ end
 function GuiLibrary.ListClass:GetList()
 	local list = {} 
 	local ans = {}
-	
+
 	for i, v in pairs(self.Values) do
 		list[i] = v['Part'].LayoutOrder
 	end
-	
+
 	for i, v in ipairs(bubbleSort(list)) do
 		table.insert(ans, v['part'])
 	end
-	
+
 	return ans
 end
 
@@ -2358,21 +2373,21 @@ function GuiLibrary.SliderClass:UpdateValues(prop)
 	self.Values.Min = prop.MinValue or nil
 	self.Values.Max = prop.MaxValue or nil
 	self.Values.CurrentValue = prop.CurrentValue or nil
-	
+
 	self.Part.Update.Value = true
-	
+
 	return self
 end
 
 function GuiLibrary.ElementClass:InsertLabel(prop)
 	if not prop.Name then return error('No Label Name!') end
-	
+
 	local obj = {}
-	
+
 	obj.Text = prop.Text or ''
 	obj.TextSize = prop.TextSize or 16
 	obj.Name = prop.Name
-	
+
 	obj.Part = Instance.new('TextLabel')
 	obj.Part.Name = prop.Name
 	obj.Part.LayoutOrder = #self.Part.Elements:GetChildren() - 1
@@ -2391,29 +2406,29 @@ function GuiLibrary.ElementClass:InsertLabel(prop)
 	obj.Part.TextXAlignment = Enum.TextXAlignment.Left
 	obj.Part.AutomaticSize = Enum.AutomaticSize.Y
 	obj.Part.RichText = true
-	
+
 	local UIPadding = Instance.new('UIPadding')
 	UIPadding.Parent = obj.Part
 	UIPadding.PaddingLeft = UDim.new(0.05, 0)
 	UIPadding.PaddingTop = UDim.new(0, 8)
-	
+
 	self.Elements[prop.Name] = obj
-	
+
 	self.Part.Event.Value = true
 	self.Part.Parent:SetAttribute('resize', true)
-	
+
 	if label_fix then task.spawn(function() task.wait(1) self.Part.Event.Value = true self.Part.Parent:SetAttribute('resize', true) end) end
-	
+
 	return self
 end
 
 function GuiLibrary.ElementClass:UpdateLabel(prop)
 	if not prop.Name then return error('No Label Name!') end
-	
+
 	if self.Elements[prop.Name] then
 		self.Elements[prop.Name].Part.Text = prop.Text or self.Elements[prop.Name].Part.Text
 		self.Elements[prop.Name].Part.Font = prop.TextFont or Enum.Font.FredokaOne
-		
+
 		if prop.LayoutOrder then
 			for i, v in ipairs(self.Elements[prop.Name].Part.Parent:GetChildren()) do
 				if not v:IsA("UIListLayout") then
@@ -2425,12 +2440,12 @@ function GuiLibrary.ElementClass:UpdateLabel(prop)
 			self.Elements[prop.Name].Part.LayoutOrder = prop.LayoutOrder
 		end
 	end
-	
+
 	self.Part.Event.Value = true
 	self.Part.Parent:SetAttribute('resize', true)
-	
+
 	if label_fix then task.spawn(function() task.wait(1) self.Part.Event.Value = true self.Part.Parent:SetAttribute('resize', true) end) end
-	
+
 	return self
 end
 
