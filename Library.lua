@@ -175,12 +175,14 @@ function GuiLibrary:KeySystem(prop)
 	
 	makefolder('ZLP_KEYSYSTEM')
 	if not prop.Name then return error('Name required!') end
+	
 	local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
 	
 	if not isfile(filename) then
 		writefile(filename, '')
 	end
 	
+	print(readfile(filename))
 	obj.Auto:Fire(readfile(filename))
 	
 	local Frame = Instance.new("Frame")
