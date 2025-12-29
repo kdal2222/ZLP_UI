@@ -182,8 +182,10 @@ function GuiLibrary:KeySystem(prop)
 		writefile(filename, '')
 	end
 	
-	print(readfile(filename))
-	obj.Auto:Fire(readfile(filename))
+	task.spawn(function()
+		task.wait(1)
+		obj.Auto:Fire(readfile(filename))
+	end)
 	
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
