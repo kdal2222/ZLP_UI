@@ -248,10 +248,10 @@ function GuiLibrary:KeySystem(prop)
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
 
 	obj.ScreenGUI = Instance.new("ScreenGui")
-	print(obj.ScreenGUI, obj.ScreenGUI:IsA('ScreenGui'))
+	print(obj.ScreenGUI.Name, obj.ScreenGUI:IsA('ScreenGui'))
+	obj.ScreenGUI.Parent = game:GetService("CoreGui")
 	obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
-	--obj.ScreenGUI.Parent = game:GetService("CoreGui")
-	obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	--obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	obj.ScreenGUI.IgnoreGuiInset = true
 	obj.ScreenGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	obj.ScreenGUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
