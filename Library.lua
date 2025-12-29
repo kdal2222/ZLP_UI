@@ -246,16 +246,16 @@ function GuiLibrary:KeySystem(prop)
 	
 	local CloseUI = Instance.new("TextButton")
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
-
-	obj.ScreenGUI = Instance.new("ScreenGui")
-	obj.ScreenGUI.Parent = game:GetService("CoreGui")
-	obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
-	--obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-	obj.ScreenGUI.IgnoreGuiInset = true
-	obj.ScreenGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	obj.ScreenGUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
-	obj.ScreenGUI.ScreenInsets = Enum.ScreenInsets.None
-	obj.ScreenGUI.ResetOnSpawn = false
+	
+	local GUI = Instance.new("ScreenGui")
+	GUI.Parent = game:GetService("CoreGui")
+	GUI.Name = "ZLP_KEYSYSTEM"
+	GUI.IgnoreGuiInset = true
+	GUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	GUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
+	GUI.ScreenInsets = Enum.ScreenInsets.None
+	GUI.ResetOnSpawn = false
+	obj.ScreenGUI = GUI
 
 	Frame.Parent = obj.ScreenGUI
 	Frame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
