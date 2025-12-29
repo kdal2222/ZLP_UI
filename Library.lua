@@ -249,7 +249,7 @@ function GuiLibrary:KeySystem(prop)
 
 	obj.ScreenGUI = Instance.new("ScreenGui")
 	wait() -- i hate xeno
-	obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
+	--obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
 	--obj.ScreenGUI.Parent = game:GetService("CoreGui")
 	obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	obj.ScreenGUI.IgnoreGuiInset = true
