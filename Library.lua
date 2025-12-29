@@ -171,21 +171,21 @@ function GuiLibrary:KeySystem(prop)
 	obj.KeySignal = Signal.new()
 	obj.Verify = Signal.new()
 	obj.Get = Signal.new()
-	--obj.Auto = Signal.new()
+	obj.Auto = Signal.new()
 	
-	--makefolder('ZLP_KEYSYSTEM')
-	--if not prop.Name then return error('Name required!') end
+	makefolder('ZLP_KEYSYSTEM')
+	if not prop.Name then return error('Name required!') end
 	
-	--local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
+	local filename = 'ZLP_KEYSYSTEM/' .. tostring(game.PlaceId) .. '_' .. tostring(prop.Name)
 	
-	--if not isfile(filename) then
-	--	writefile(filename, '')
-	--end
+	if not isfile(filename) then
+		writefile(filename, '')
+	end
 	
-	--task.spawn(function()
-	--	task.wait(1)
-	--	obj.Auto:Fire(readfile(filename))
-	--end)
+	task.spawn(function()
+		task.wait(1)
+		obj.Auto:Fire(readfile(filename))
+	end)
 	
 	local Frame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -246,16 +246,21 @@ function GuiLibrary:KeySystem(prop)
 	
 	local CloseUI = Instance.new("TextButton")
 	local UIAspectRatioConstraint42 = Instance.new("UIAspectRatioConstraint")
-	
-	local GUI = Instance.new("ScreenGui")
-	GUI.Parent = game:GetService("CoreGui")
-	GUI.Name = "ZLP_KEYSYSTEM"
-	GUI.IgnoreGuiInset = true
-	GUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	GUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
-	GUI.ScreenInsets = Enum.ScreenInsets.None
-	GUI.ResetOnSpawn = false
-	obj.ScreenGUI = GUI
+
+	obj.ScreenGUI = Instance.new("ScreenGui")
+	local s, r = pcall(function()
+		obj.ScreenGUI.Name = "ZLP_KEYSYSTEM"
+	end)
+	if not s then
+		print('LOL XD')
+	end
+	obj.ScreenGUI.Parent = game:GetService("CoreGui")
+	--obj.ScreenGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	obj.ScreenGUI.IgnoreGuiInset = true
+	obj.ScreenGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	obj.ScreenGUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
+	obj.ScreenGUI.ScreenInsets = Enum.ScreenInsets.None
+	obj.ScreenGUI.ResetOnSpawn = false
 
 	Frame.Parent = obj.ScreenGUI
 	Frame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
